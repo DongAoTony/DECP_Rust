@@ -128,7 +128,7 @@ mod decp {
             self.total_supply
         }
 
-        /*
+        
         /// Returns the token's name.
         #[ink(message)]
         pub fn name(&self) -> String {
@@ -140,7 +140,7 @@ mod decp {
         pub fn decimal(&self) -> u8 {
             self.decimal
         }
-        */
+
 
         /// Returns the account balance for the specified `owner`.
         #[ink(message)]
@@ -221,6 +221,7 @@ mod decp {
                 .insert((&from, &caller), &(allowance - value));
             Ok(())
         }
+
                 
         /// Fragment the asset according to user's order
         #[ink(message)]
@@ -332,6 +333,18 @@ mod decp {
             assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
             contract.fragment(10, 3);
             assert_eq!(contract.fragment_container_owner(AccountId::from([0x1; 32]), 4), (1, 0));
+        }
+
+        #[ink::test]
+        fn name_works() {
+            let mut contract = Decp::new(100, "DECP".to_string(), 2);
+            assert_eq!(contract.name(), "DECP");
+        }
+
+        #[ink::test]
+        fn decimal_works() {
+            let mut contract = Decp::new(100, "DECP".to_string(), 2);
+            assert_eq!(contract.decimal(), 2);
         }
     }
 
